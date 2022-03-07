@@ -1,21 +1,15 @@
 package test;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selectors;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.Data;
-
-import java.nio.channels.Selector;
-
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.*;
+import static ru.netology.Data.*;
 import static ru.netology.Data.Registration.getRegisteredUser;
 import static ru.netology.Data.Registration.getUser;
-import static ru.netology.Data.getRandomLogin;
-import static ru.netology.Data.getRandomPassword;
 
 
 public class TestAPI {
@@ -28,7 +22,7 @@ public class TestAPI {
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = getRegisteredUser("active");
-
+given().spec(requestSpec).
              when().post("/api/system/users", registeredUser).
 
                 then().statusCode(200);
@@ -38,6 +32,7 @@ public class TestAPI {
     @DisplayName("Should get error message if login with not registered user")
     void shouldGetErrorIfNotRegisteredUser() {
         var notRegisteredUser = getUser("active");
+        given().spec(requestSpec).
         when().post("/api/system/users", notRegisteredUser).
 
                 then().statusCode(400);
@@ -48,6 +43,7 @@ public class TestAPI {
     @DisplayName("Should get error message if login with blocked registered user")
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = getRegisteredUser("blocked");
+        given().spec(requestSpec).
         when().post("/api/system/users", blockedUser).
 
                 then().statusCode(400);
@@ -58,7 +54,7 @@ public class TestAPI {
     void shouldGetErrorIfWrongLogin() {
         var registeredUser = getRegisteredUser("active");
         var wrongLogin = getRandomLogin();
-
+        given().spec(requestSpec).
         when().post("/api/system/users", new Data.RegistrationDto(wrongLogin,registeredUser.getPassword(),"active") ).
 
                 then().statusCode(400); }
@@ -68,6 +64,7 @@ public class TestAPI {
     void shouldGetErrorIfWrongPassword() {
         var registeredUser = getRegisteredUser("active");
         var wrongPassword = getRandomPassword();
+        given().spec(requestSpec).
         when().post("/api/system/users", new Data.RegistrationDto(registeredUser.getLogin(),wrongPassword,"active") ).
 
                 then().statusCode(400);

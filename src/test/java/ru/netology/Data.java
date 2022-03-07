@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class Data {
 
-    private static final RequestSpecification requestSpec = new RequestSpecBuilder()
+    public static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
             .setPort(9999)
             .setAccept(ContentType.JSON)
