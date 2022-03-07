@@ -76,7 +76,7 @@ public class TestAPI {
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $(Selectors.withText("Продолжить")).click();
-        $("[data-test-id='error-notification']").shouldBe(Condition.appear)
+        $("[data-test-id='error-notification']").shouldBe(Condition.visible)
                 .$(Selectors.withText("Неверно указан логин или пароль"));
 
     }
