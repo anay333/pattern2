@@ -28,7 +28,7 @@ public class TestAPI {
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $(Selectors.withText("Продолжить")).click();
-        $(Selectors.withText("  Личный кабинет")).shouldBe(Condition.visible);
+        $(Selectors.withText("Личный кабинет")).shouldBe(Condition.visible);
     }
 
     @Test
