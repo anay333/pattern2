@@ -26,7 +26,8 @@ public class TestAPI {
         given().spec(requestSpec).
                 when().post("http://localhost:9999/",registeredUser).
 
-                then().statusCode(200);}
+                then().statusCode(200).body("login",is(registeredUser.getLogin()),"password",is (registeredUser.getPassword()),"status",is (registeredUser.getStatus()));
+    }
 
     @Test
     @DisplayName("Should get error message if login with not registered user")
@@ -35,7 +36,7 @@ public class TestAPI {
         given().spec(requestSpec).
         when().post("http://localhost:9999/", notRegisteredUser).
 
-                then().statusCode(400);
+                then().statusCode(400).body("login",is(notRegisteredUser.getLogin()),"password",is (notRegisteredUser.getPassword()),"status",is (notRegisteredUser.getStatus()));
 
     }
 
@@ -46,7 +47,7 @@ public class TestAPI {
         given().spec(requestSpec).
         when().post("http://localhost:9999/", blockedUser).
 
-                then().statusCode(400);
+                then().statusCode(400).body("login",is(blockedUser.getLogin()),"password",is (blockedUser.getPassword()),"status",is (blockedUser.getStatus()));
     }
 
     @Test
@@ -57,7 +58,8 @@ public class TestAPI {
         given().spec(requestSpec).
         when().post("http://localhost:9999/", new Data.RegistrationDto(wrongLogin,registeredUser.getPassword(),"active") ).
 
-                then().statusCode(400); }
+                then().statusCode(400).body("login",is(wrongLogin),"password",is (registeredUser.getPassword()),"status",is (registeredUser.getStatus()));
+    }
 
     @Test
     @DisplayName("Should get error message if login with wrong password")
@@ -67,7 +69,8 @@ public class TestAPI {
         given().spec(requestSpec).
         when().post("http://localhost:9999/", new Data.RegistrationDto(registeredUser.getLogin(),wrongPassword,"active") ).
 
-                then().statusCode(400);
+   then().statusCode(400).body("login",is(registeredUser.getLogin()),"password",is (wrongPassword),"status",is (registeredUser.getStatus()));
+        ;
     }
 
 
