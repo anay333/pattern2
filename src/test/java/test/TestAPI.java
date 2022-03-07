@@ -38,7 +38,7 @@ public class TestAPI {
         $("[data-test-id='login'] input").setValue(notRegisteredUser.getLogin());
         $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $(Selectors.withText("Продолжить")).click();
-        $(Selectors.withText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
+        $("[data-test-id='error-notification']").shouldBe(Condition.appear);
 
     }
 
@@ -49,7 +49,7 @@ public class TestAPI {
         $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
         $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
         $(Selectors.withText("Продолжить")).click();
-        $(Selectors.withText("Пользователь заблокирован")).shouldBe(Condition.visible);
+        $(Selectors.withText("Пользователь заблокирован")).shouldBe(Condition.appear);
 
     }
 
@@ -61,7 +61,7 @@ public class TestAPI {
         $("[data-test-id='login'] input").setValue(wrongLogin);
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $(Selectors.withText("Продолжить")).click();
-        $(Selectors.withText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
+        $(Selectors.withText("Неверно указан логин или пароль")).shouldBe(Condition.appear);
 
     }
 
@@ -73,7 +73,7 @@ public class TestAPI {
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $(Selectors.withText("Продолжить")).click();
-        $(Selectors.withText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
+        $(Selectors.withText("Неверно указан логин или пароль")).shouldBe(Condition.appear);
 
     }
 
