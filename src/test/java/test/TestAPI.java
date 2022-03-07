@@ -23,7 +23,7 @@ public class TestAPI {
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = getRegisteredUser("active");
 given().spec(requestSpec).
-             when().post("/api/system/users", registeredUser).
+             when().get("/api/system/users", registeredUser).
 
                 then().statusCode(200);
     }
@@ -33,7 +33,7 @@ given().spec(requestSpec).
     void shouldGetErrorIfNotRegisteredUser() {
         var notRegisteredUser = getUser("active");
         given().spec(requestSpec).
-        when().post("/api/system/users", notRegisteredUser).
+        when().get("/api/system/users", notRegisteredUser).
 
                 then().statusCode(400);
 
@@ -44,7 +44,7 @@ given().spec(requestSpec).
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = getRegisteredUser("blocked");
         given().spec(requestSpec).
-        when().post("/api/system/users", blockedUser).
+        when().get("/api/system/users", blockedUser).
 
                 then().statusCode(400);
     }
@@ -55,7 +55,7 @@ given().spec(requestSpec).
         var registeredUser = getRegisteredUser("active");
         var wrongLogin = getRandomLogin();
         given().spec(requestSpec).
-        when().post("/api/system/users", new Data.RegistrationDto(wrongLogin,registeredUser.getPassword(),"active") ).
+        when().get("/api/system/users", new Data.RegistrationDto(wrongLogin,registeredUser.getPassword(),"active") ).
 
                 then().statusCode(400); }
 
@@ -65,7 +65,7 @@ given().spec(requestSpec).
         var registeredUser = getRegisteredUser("active");
         var wrongPassword = getRandomPassword();
         given().spec(requestSpec).
-        when().post("/api/system/users", new Data.RegistrationDto(registeredUser.getLogin(),wrongPassword,"active") ).
+        when().get("/api/system/users", new Data.RegistrationDto(registeredUser.getLogin(),wrongPassword,"active") ).
 
                 then().statusCode(400);
     }
