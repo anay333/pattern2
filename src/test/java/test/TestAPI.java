@@ -24,17 +24,16 @@ public class TestAPI {
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = getRegisteredUser("active");
         given().spec(requestSpec).
-                when().get("/api/system/users", registeredUser).
+                when().post("http://localhost:9999/",registeredUser).
 
-                then().assertThat().statusCode(200).and().body("login", is(registeredUser.getLogin()),"password", is(registeredUser.getPassword()),"status", is(registeredUser.getStatus()));
-    }
+                then().statusCode(200);}
 
     @Test
     @DisplayName("Should get error message if login with not registered user")
     void shouldGetErrorIfNotRegisteredUser() {
         var notRegisteredUser = getUser("active");
         given().spec(requestSpec).
-        when().get("/api/system/users", notRegisteredUser).
+        when().post("http://localhost:9999/", notRegisteredUser).
 
                 then().statusCode(400);
 
@@ -45,7 +44,7 @@ public class TestAPI {
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = getRegisteredUser("blocked");
         given().spec(requestSpec).
-        when().get("/api/system/users", blockedUser).
+        when().post("http://localhost:9999/", blockedUser).
 
                 then().statusCode(400);
     }
@@ -56,7 +55,7 @@ public class TestAPI {
         var registeredUser = getRegisteredUser("active");
         var wrongLogin = getRandomLogin();
         given().spec(requestSpec).
-        when().get("/api/system/users", new Data.RegistrationDto(wrongLogin,registeredUser.getPassword(),"active") ).
+        when().post("http://localhost:9999/", new Data.RegistrationDto(wrongLogin,registeredUser.getPassword(),"active") ).
 
                 then().statusCode(400); }
 
@@ -66,7 +65,7 @@ public class TestAPI {
         var registeredUser = getRegisteredUser("active");
         var wrongPassword = getRandomPassword();
         given().spec(requestSpec).
-        when().get("/api/system/users", new Data.RegistrationDto(registeredUser.getLogin(),wrongPassword,"active") ).
+        when().post("http://localhost:9999/", new Data.RegistrationDto(registeredUser.getLogin(),wrongPassword,"active") ).
 
                 then().statusCode(400);
     }
