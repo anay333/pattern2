@@ -50,7 +50,7 @@ public class Data {
         }
 
         public static RegistrationDto getUser(String status) {
-            RegistrationDto user= new RegistrationDto(getRandomLogin(),getRandomPassword(),"active");
+            RegistrationDto user= new RegistrationDto(getRandomLogin(),getRandomPassword(),status);
             return user;
         }
 
